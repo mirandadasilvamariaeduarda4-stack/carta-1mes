@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disney/Pixar Cars - Ka-Chow Experience</title>
+    <!-- Tailwind CSS para estilização moderna e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        carsRed: '#D31312',
+                        carsDarkRed: '#8B0000',
+                        carsYellow: '#FFDE00',
+                        carsOrange: '#FF6600',
+                        carsAsphalt: '#1A1A1A',
+                        carsSilver: '#B0B0B0',
+                    },
+                    fontFamily: {
+                        racing: ['Impact', 'Arial Black', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #f3f4f6;
+            overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .asphalt-bg {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 100%);
+            position: relative;
+        }
+        
+        .asphalt-bg::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(#333 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .checkered-border {
+            background-image: repeating-linear-gradient(45deg, #000 0, #000 15px, #fff 15px, #fff 30px);
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 15px rgba(255, 222, 0, 0.6));
+            }
+            50% {
+                transform: scale(1.04);
+                filter: drop-shadow(0 0 25px rgba(211, 19, 18, 0.9));
+            }
+        }
+
+        .car-pulse {
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        .speed-track {
+            background-image: linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 40px 100px;
+        }
+
+        .page-transition {
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        /* Estilização para as Caixas de Conteúdo (Carta, Poema e Canção) */
+        .love-letter-box {
+            background: linear-gradient(135deg, #fffaf0 0%, #fef3c7 100%);
+            color: #2b2b2b;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 40px rgba(211, 19, 18, 0.08);
+            border: 4px solid #D31312;
+        }
+    </style>
+</head>
+<body class="bg-carsAsphalt min-h-screen flex flex-col justify-between selection:bg-carsYellow selection:text-black">
+
+    <!-- ÁUDIO DE FUNDO -->
+    <audio id="bg-music" loop>
+        <source src="Forever and Ever and Always (The Softer Version) [GRC_iiZtAkA].mp3" type="audio/mpeg">
+        Seu navegador não suporta áudio.
+    </audio>
+
+    <!-- ========================================================== -->
+    <!-- PÁGINA 1 — TELA DE ENTRADA                                 -->
+    <!-- ========================================================== -->
+    <section id="page-home" class="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden page-transition">
+        <div class="absolute inset-0 z-0">
+            <img id="home-bg-img" src="fundo.jpeg" 
+                 alt="Pista de Corrida Cars Background" class="w-full h-full object-cover object-center filter brightness-50 contrast-125" onerror="this.src='https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1920&q=80'">
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-carsDarkRed/40 to-black/60 mix-blend-multiply"></div>
+            <div class="absolute inset-0 bg-black/40"></div>
+        </div>
+
+        <div class="absolute top-0 left-0 w-full h-3 checkered-border z-10"></div>
+
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
+            <div class="mb-4 inline-block bg-carsRed border-2 border-carsYellow text-carsYellow px-6 py-1 rounded-full uppercase tracking-widest font-black text-xs md:text-sm shadow-lg transform -rotate-1 animate-bounce">
+                <i class="fa-solid fa-flag-checkered mr-2"></i> Para meu amor
+            </div>
+
+            <h1 class="text-4xl md:text-7xl font-racing text-white uppercase tracking-wider drop-shadow-[0_5px_5px_rgba(0,0,0,0.9)] mb-2">
+                Pronto para a <span class="text-carsYellow underline decoration-carsRed">Largada?</span>
+            </h1>
+            <p class="text-carsSilver text-sm md:text-lg max-w-xl mx-auto mb-8 font-medium drop-shadow">
+                Clique no Relâmpago McQueen 
+            </p>
+
+            <div onclick="navigateToPage2()" class="cursor-pointer group relative transition-transform duration-300 transform hover:scale-110 active:scale-95" title="Clique para entrar no site!">
+                <div class="absolute -inset-4 bg-gradient-to-r from-carsRed via-carsYellow to-carsOrange rounded-full blur-xl opacity-70 group-hover:opacity-100 transition duration-500 group-hover:duration-200 animate-pulse"></div>
+                
+                <div class="relative bg-black/40 border-4 border-carsYellow p-4 rounded-3xl shadow-2xl backdrop-blur-sm car-pulse">
+                    <img id="home-central-img" src="icon.png" 
+                         alt="Relâmpago McQueen Carro Principal" class="w-64 md:w-96 h-auto object-contain rounded-2xl transition duration-300 group-hover:brightness-125" onerror="this.src='https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=600&q=80'">
+                    
+                    <div class="absolute -bottom-5 left-1/2 transform -translate-x-1/2 bg-carsRed text-white font-racing text-lg px-6 py-2 rounded-full border-2 border-carsYellow shadow-xl tracking-wider group-hover:bg-carsYellow group-hover:text-black transition-colors">
+                        KA-CHOW! <i class="fa-solid fa-bolt ml-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 w-full h-3 checkered-border z-10"></div>
+    </section>
+
+
+    <!-- ========================================================== -->
+    <!-- PÁGINA 2 — PAINEL RADIATOR SPRINGS (DASHBOARD)              -->
+    <!-- ========================================================== -->
+    <section id="page-2" class="hidden relative w-full min-h-screen asphalt-bg speed-track flex flex-col justify-between page-transition">
+        
+        <header class="w-full bg-black/80 border-b-4 border-carsRed sticky top-0 z-50 backdrop-blur-md shadow-2xl">
+            <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateToHome()">
+                    <div class="bg-carsRed text-carsYellow p-2 rounded-xl font-racing text-xl border-2 border-carsYellow shadow-md">
+                        #95
+                    </div>
+                    <div>
+                        <span class="block font-racing text-xl md:text-2xl text-white tracking-wider">COM TODO O MEU AMOR</span>
+                        <span class="text-xs text-carsYellow uppercase tracking-widest font-bold">The Pixar Cars Hub</span>
+                    </div>
+                </div>
+
+                <button onclick="navigateToHome()" class="bg-carsRed hover:bg-red-700 text-white font-bold px-4 py-2 rounded-lg border border-carsYellow shadow-lg transition transform hover:-translate-y-0.5 flex items-center text-sm">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Voltar à Entrada
+                </button>
+            </div>
+            <div class="w-full h-1 bg-gradient-to-r from-carsRed via-carsYellow to-carsOrange"></div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 py-12 flex-grow w-full">
+            <div class="text-center mb-12">
+                <span class="bg-carsYellow/20 text-carsYellow border border-carsYellow/50 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest">
+                    Painel Oficial 1° mês
+                </span>
+                <h2 class="text-3xl md:text-5xl font-racing text-white mt-3 uppercase tracking-wide drop-shadow-md">
+                    Aqui dedico com amor o nosso primeiro <span class="text-carsRed">Mês</span>
+                </h2>
+                <p class="text-carsSilver max-w-2xl mx-auto mt-2 text-sm md:text-base">
+                    Clique nos cards abaixo para abrir experiências exclusivas criadas para você!
+                </p>
+            </div>
+
+            <!-- Grade de Cards Interativos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                
+                <!-- CARD 1: Relâmpago McQueen -> Abre a Carta -->
+                <div onclick="navigateToCard1()" class="cursor-pointer group relative bg-neutral-900/90 border-2 border-neutral-800 hover:border-carsRed rounded-2xl p-6 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(211,19,18,0.3)] overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-carsRed text-carsYellow font-racing text-sm px-4 py-1 rounded-bl-xl border-l border-b border-carsYellow">
+                        #95 Carta
+                    </div>
+                    <div class="h-48 mb-4 rounded-xl overflow-hidden relative bg-black/50 flex items-center justify-center">
+                        <img src="imagem.jpg" alt="Relâmpago McQueen" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 filter group-hover:brightness-110" onerror="this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <span class="absolute bottom-3 left-3 text-white font-racing text-lg tracking-wide">Relâmpago McQueen</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Abra para ler a carta de amor mais sincera escrita com todo o meu coração para você, Carol.
+                    </p>
+                    <div class="flex items-center justify-between text-xs text-carsYellow font-bold uppercase tracking-wider pt-2 border-t border-neutral-800">
+                        <span>Experiência Especial</span>
+                        <span class="bg-carsRed text-white px-2 py-1 rounded"><i class="fa-solid fa-envelope-open-text mr-1"></i> Abrir Carta</span>
+                    </div>
+                </div>
+
+                <!-- CARD 2: Mate -> Abre o Poema -->
+                <div onclick="navigateToCard2()" class="cursor-pointer group relative bg-neutral-900/90 border-2 border-neutral-800 hover:border-carsOrange rounded-2xl p-6 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(255,102,0,0.3)] overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-carsOrange text-white font-racing text-sm px-4 py-1 rounded-bl-xl border-l border-b border-carsYellow">
+                        Poema
+                    </div>
+                    <div class="h-48 mb-4 rounded-xl overflow-hidden relative bg-black/50 flex items-center justify-center">
+                        <img src="imagem2.jpg" alt="Mate Tow Mater" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 filter group-hover:brightness-110" onerror="this.src='https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=600&q=80'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <span class="absolute bottom-3 left-3 text-white font-racing text-lg tracking-wide">Poema de Pista</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Um poema épico narrando cada curva da nossa história, nossas memórias e nosso amor.
+                    </p>
+                    <div class="flex items-center justify-between text-xs text-carsYellow font-bold uppercase tracking-wider pt-2 border-t border-neutral-800">
+                        <span>Versos de Estrada</span>
+                        <span class="bg-carsOrange text-white px-2 py-1 rounded"><i class="fa-solid fa-book-open mr-1"></i> Ler Poema</span>
+                    </div>
+                </div>
+
+                <!-- CARD 3: Doc Hudson -> Abre a Canção -->
+                <div onclick="navigateToCard3()" class="cursor-pointer group relative bg-neutral-900/90 border-2 border-neutral-800 hover:border-carsYellow rounded-2xl p-6 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(255,222,0,0.3)] overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-carsYellow text-black font-racing text-sm px-4 py-1 rounded-bl-xl border-l border-b border-carsDarkRed">
+                        Música
+                    </div>
+                    <div class="h-48 mb-4 rounded-xl overflow-hidden relative bg-black/50 flex items-center justify-center">
+                        <img src="imagem3.jpg" alt="Doc Hudson" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 filter group-hover:brightness-110" onerror="this.src='https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <span class="absolute bottom-3 left-3 text-white font-racing text-lg tracking-wide">Fire-Red Highway</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">
+                        A letra da canção escrita especialmente para você, celebrando o nosso primeiro mês de namoro.
+                    </p>
+                    <div class="flex items-center justify-between text-xs text-carsYellow font-bold uppercase tracking-wider pt-2 border-t border-neutral-800">
+                        <span>Canção Exclusiva</span>
+                        <span class="bg-carsYellow text-black px-2 py-1 rounded font-bold"><i class="fa-solid fa-music mr-1"></i> Ver Canção</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bg-gradient-to-r from-neutral-900 via-neutral-950 to-neutral-900 border-2 border-carsRed rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-carsRed/10 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="p-4 border-b md:border-b-0 md:border-r border-neutral-800">
+                        <div class="text-carsYellow text-4xl font-racing mb-1">01</div>
+                        <div class="text-white font-bold uppercase text-sm">Mês de Namoro</div>
+                        <p class="text-gray-500 text-xs mt-1">Aventura, amizade e alta velocidade</p>
+                    </div>
+                    <div class="p-4 border-b md:border-b-0 md:border-r border-neutral-800">
+                        <div class="text-carsRed text-4xl font-racing mb-1">Route 66</div>
+                        <div class="text-white font-bold uppercase text-sm">A Estrada Histórica</div>
+                        <p class="text-gray-500 text-xs mt-1">Onde tudo mudou para o #95</p>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-carsYellow text-4xl font-racing mb-1">Carol</div>
+                        <div class="text-white font-bold uppercase text-sm">O Amor da Minha Vida</div>
+                        <p class="text-gray-500 text-xs mt-1">Minha melhor amiga e companheira</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="w-full bg-black border-t-2 border-neutral-800 py-6 text-center text-gray-500 text-xs">
+            <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p>&copy; 2026 Disney / Pixar. Inspirado no universo de Carros. Desenvolvido com foco total em interatividade.</p>
+                <div class="flex space-x-4">
+                    <span class="hover:text-carsRed cursor-pointer transition" onclick="navigateToHome()">Início</span>
+                    <span class="hover:text-carsYellow cursor-pointer transition">Termos de Pista</span>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+
+    <!-- ========================================================== -->
+    <!-- PÁGINA DO CARD 1 — A CARTA ROMÂNTICA                       -->
+    <!-- ========================================================== -->
+    <section id="page-card1" class="hidden relative w-full min-h-screen asphalt-bg speed-track flex flex-col justify-between page-transition">
+        
+        <header class="w-full bg-black/90 border-b-4 border-carsRed sticky top-0 z-50 backdrop-blur-md shadow-2xl">
+            <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+                <button onclick="navigateToPage2()" class="bg-carsRed hover:bg-red-700 text-white font-bold px-4 py-2 rounded-lg border border-carsYellow shadow-lg transition transform hover:-translate-y-0.5 flex items-center text-sm">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Voltar ao Painel
+                </button>
+
+                <div class="flex items-center space-x-3 bg-neutral-900 border border-carsYellow/40 px-4 py-1.5 rounded-full shadow-md">
+                    <button onclick="toggleMusic()" class="text-carsYellow hover:text-white transition text-lg" title="Play / Pause Música">
+                        <i class="fa-solid fa-play" id="music-icon"></i>
+                    </button>
+                    <span class="text-xs text-carsSilver font-medium uppercase tracking-wider hidden sm:inline">Trilha Sonora:</span>
+                    <input type="range" min="0" max="1" step="0.05" value="0.5" onchange="changeVolume(this.value)" class="w-20 accent-carsYellow cursor-pointer" title="Controle de Volume">
+                </div>
+            </div>
+            <div class="w-full h-1 bg-gradient-to-r from-carsRed via-carsYellow to-carsOrange"></div>
+        </header>
+
+        <main class="max-w-4xl mx-auto px-4 py-12 flex-grow w-full flex items-center justify-center">
+            <div class="love-letter-box rounded-3xl p-8 md:p-12 relative my-6 w-full">
+                <div class="absolute -top-5 right-8 bg-carsRed text-carsYellow font-racing text-sm px-4 py-1.5 rounded-full border-2 border-carsYellow shadow-lg transform rotate-3">
+                    <i class="fa-solid fa-heart mr-1"></i> Especial 1° Mês
+                </div>
+
+                <h2 class="text-3xl md:text-5xl font-racing text-carsDarkRed uppercase tracking-wide mb-6 text-center drop-shadow-sm">
+                    My Love, Carol ❤️
+                </h2>
+
+                <div class="space-y-4 text-neutral-800 text-base md:text-lg leading-relaxed font-serif">
+                    <p>Today I stop to write something that my heart has been screaming since the day you walked into my life: I love you more than anything. More than any word I could write, more than any gesture I could have made. I love you in a way that overflows, that doesn't fit inside me, that makes me want to be better every single day.</p>
+                    
+                    <p>This first official month of dating was small in time, but giant in what we built. In so little time, I could already feel how much we've grown together. We learned to truly listen to each other — not just hear, but understand what the other feels, what the other needs. We learned from one another, we shaped each other, we discovered each other. We made mistakes, yes. But we also got things right. And above all of that, we kept loving each other intensely, without fear, without brakes, without hesitation.</p>
+
+                    <p>During this first month, I could see clearly how much I love you. How much I want you. How much you make my heart pound and leap with joy just by thinking of you. And it was in this month, more than in any other moment, that I could declare with all the certainty in the world: you are, in fact, the woman with whom I want to build a life. Marry. Have children. Build a home. A home that has already begun to exist in your lap.</p>
+
+                    <p>I feel like the luckiest woman in the world to have you. And I don't say that just to say it. You left Rio de Janeiro to come meet me. You crossed paths, distances, to ask me to be your girlfriend. That is priceless. That cannot be measured. I will never forget what you did for me. To me, that was the greatest act of love I have ever received in my life. And I will carry that with me forever, with gratitude and with a love that only grows.</p>
+
+                    <p>Carol, you are the best part of me. The best part of my days. Without a doubt, you are the person I love most in the world. And you are not just my girlfriend — you are also my best friend. The person with whom I want to share everything: the victories, the fears, the silences, the laughter, the plans. Everything.</p>
+
+                    <p>I have come to yearn for and depend entirely on your kiss. The most delicious taste in the world. Your embrace is my best refuge. Your lap is my home. Your touch is everything I desire. Since I saw you in person, I can only repeat in my head how incredibly beautiful you are. Owner of the most beautiful eyes I have ever seen and the most beautiful heart I have ever known. You have the most delicious laugh and a giggle that echoes inside my head every day, saving me whenever I am in the dark.</p>
+
+                    <p>You are the love of my life. And your fire-red hair remains engraved in my memory as the most beautiful image I have ever seen. When I saw you for the first time, my heart was in ecstasy, trying to understand how I could be so lucky. And how could I deserve her? Because I don't deserve you, you are so good and perfect. And still, I feel like the luckiest human being in the world to have you with me.</p>
+
+                    <p>I want to be my best version with you. I want that, during all the months to come, we can build a beautiful relationship. That we can continue creating our little world and our story. This was only the first of many months yet to come. And until then, I will be here, loving you and growing with you.</p>
+
+                    <p>I will be with you not just to be your girlfriend, but to be a support. Someone who will take you by the hand and lift you up. Someone who will teach and learn. Someone who will fix flaws and misunderstandings with love, respect, and a lot of peace. You don't need to be afraid of making mistakes, because afterward we will get it right together. Always together.</p>
+
+                    <p class="font-bold text-carsRed pt-2">I love you so much, Carol. More than any letter can say. More than any month can measure. And if this is only the beginning, I can hardly wait for everything we are still going to live.</p>
+                </div>
+
+                <div class="mt-8 pt-6 border-t-2 border-carsRed/20 text-right">
+                    <p class="font-racing text-xl text-carsDarkRed">With all my love,</p>
+                    <p class="font-racing text-2xl text-carsRed">Yours. 🏁❤️</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="w-full bg-black border-t-2 border-neutral-800 py-6 text-center text-gray-500 text-xs">
+            <p>&copy; 2026 Carta Especial Relâmpago McQueen &mdash; Para Carol</p>
+        </footer>
+    </section>
+
+
+    <!-- ========================================================== -->
+    <!-- PÁGINA DO CARD 2 — O POEMA ROMÂNTICO                       -->
+    <!-- ========================================================== -->
+    <section id="page-card2" class="hidden relative w-full min-h-screen asphalt-bg speed-track flex flex-col justify-between page-transition">
+        
+        <header class="w-full bg-black/90 border-b-4 border-carsOrange sticky top-0 z-50 backdrop-blur-md shadow-2xl">
+            <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+                <button onclick="navigateToPage2()" class="bg-carsOrange hover:bg-orange-600 text-white font-bold px-4 py-2 rounded-lg border border-carsYellow shadow-lg transition transform hover:-translate-y-0.5 flex items-center text-sm">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Voltar ao Painel
+                </button>
+
+                <div class="flex items-center space-x-3 bg-neutral-900 border border-carsYellow/40 px-4 py-1.5 rounded-full shadow-md">
+                    <button onclick="toggleMusic()" class="text-carsYellow hover:text-white transition text-lg" title="Play / Pause Música">
+                        <i class="fa-solid fa-play" id="music-icon-2"></i>
+                    </button>
+                    <span class="text-xs text-carsSilver font-medium uppercase tracking-wider hidden sm:inline">Trilha Sonora:</span>
+                    <input type="range" min="0" max="1" step="0.05" value="0.5" onchange="changeVolume(this.value)" class="w-20 accent-carsYellow cursor-pointer" title="Controle de Volume">
+                </div>
+            </div>
+            <div class="w-full h-1 bg-gradient-to-r from-carsOrange via-carsYellow to-carsRed"></div>
+        </header>
+
+        <main class="max-w-4xl mx-auto px-4 py-12 flex-grow w-full flex items-center justify-center">
+            <div class="love-letter-box rounded-3xl p-8 md:p-12 relative my-6 w-full" style="border-color: #FF6600;">
+                <div class="absolute -top-5 right-8 bg-carsOrange text-white font-racing text-sm px-4 py-1.5 rounded-full border-2 border-carsYellow shadow-lg transform rotate-3">
+                    <i class="fa-solid fa-book-open mr-1"></i> Poema do 1° Mês
+                </div>
+
+                <h2 class="text-3xl md:text-5xl font-racing text-carsOrange uppercase tracking-wide mb-8 text-center drop-shadow-sm">
+                    The Road We Drive Together 🚗❤️
+                </h2>
+
+                <div class="space-y-8 text-neutral-800 text-base md:text-lg leading-relaxed font-serif text-center">
+                    <div>
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Verse I — The First Mile</h3>
+                        <p>I never knew a heart could start so fast,<br>Like an engine roaring on a mountain pass.<br>Then you appeared, and everything stood still,<br>A fire-red spark that bent my iron will.<br>They say the road is long, they say it's rough,<br>But one month with you has been more than enough<br>To know that I was built for something true —<br>A life, a home, a highway made for two.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Verse II — The Road We Built Together</h3>
+                        <p>We learned to listen, not just hear the sound,<br>To slow the wheels before we hit the ground.<br>We made our mistakes, we took a wrong turn or two,<br>But we always found the road back — me and you.<br>We grew so much in such a little while,<br>Learning to brake, to swerve, to reconcile.<br>We erred, we fixed, we stumbled, then we flew,<br>And through it all, my love for you stayed true.<br>I saw it clearly in that first month's drive:<br>How much I love you, how much I feel alive.<br>My heart goes vroom and skips and leaps with glee,<br>Because you are the only road for me.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Verse III — The Woman I Choose</h3>
+                        <p>It was in this month I knew with certainty —<br>You are the woman I was made to see.<br>The one I'll marry, the one I'll build beside,<br>A home, a family, a joyful ride.<br>I am the luckiest woman in the world,<br>My checkered flag, my victory unfurled.<br>You drove from Rio just to find me here,<br>To ask me to be yours — and now it's clear:<br>No price, no trophy, no grand prix could hold<br>The weight of what you did, so brave and bold.<br>I'll never forget it, not for all my days —<br>The greatest act of love, in all its ways.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Verse IV — The Best Part of Me</h3>
+                        <p>Carol, you're the best part of my soul,<br>The part that makes me whole, that makes me whole.<br>The best part of my days, my every mile,<br>The reason for my laughter and my smile.<br>You're not just my girlfriend — oh, so much more,<br>My best friend, the one I'm driving for.<br>I crave your kiss, the sweetest taste I know,<br>Your arms, the safest place I'll ever go.<br>Your lap's my home, your touch is my desire,<br>Your presence sets my weary heart on fire.<br>Since I saw you, I just can't help but say:<br>How stunning you are, in every single way.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Verse V — Those Eyes, That Laugh</h3>
+                        <p>The most beautiful eyes I've ever seen,<br>The kindest heart, the softest in-between.<br>Your laugh, the tastiest sound that fills the air,<br>Your giggle echoes — I find it everywhere.<br>It saves me daily when I'm in the dark,<br>A guiding light, a bright and hopeful spark.<br>The love of my life — that's what you are,<br>My fire-red comet, my favorite star.<br>Your fire-red hair is burned into my mind,<br>The most beautiful picture I could ever find.<br>When I first saw you, my heart was in a daze,<br>Wondering how I earned such grace-filled days.<br>How could I deserve someone so good, so true?<br>I don't — and yet the universe gave me you.<br>I'm the luckiest human being alive,<br>With you beside me, I can only thrive.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Verse VI — The Promise of the Road Ahead</h3>
+                        <p>I want to be my best version with you,<br>To build a love so beautiful and new.<br>To keep on crafting our own little world,<br>A story for the ages, unfurled.<br>This was just the first of many months to come,<br>And till the end, I'll be here, never numb.<br>Loving you, growing with you, side by side,<br>With you as my companion and my guide.<br>I'll be with you, not just as your girlfriend,<br>But as a support until the very end.<br>Someone who takes your hand and lifts you high,<br>Who teaches, learns, and never says goodbye.<br>We'll fix our flaws, our clashes, and our fears,<br>With love, respect, and peace through all the years.<br>You need not fear mistakes — we'll make them right,<br>Together, always, in the warmest light.</p>
+                    </div>
+
+                    <div class="pt-4 border-t border-carsOrange/30">
+                        <h3 class="font-racing text-carsOrange text-xl mb-2 uppercase">Final Verse — The Checkered Flag</h3>
+                        <p>I love you more than any words can say,<br>More than any month could ever weigh.<br>If this is just the start of our grand race,<br>I can't wait to see what lies in space.<br>So here's my heart, my engine, and my all,<br>I'm yours completely — catch me when I fall.<br>With every mile and every turn we take,<br>I'll love you more, for love's own sake.<br><strong class="text-carsRed block mt-4">I love you so much, Carol.</strong></p>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-6 border-t-2 border-carsOrange/20 text-right">
+                    <p class="font-racing text-xl text-carsDarkRed">&mdash; Yours, on every road, forever.</p>
+                    <p class="font-racing text-2xl text-carsOrange">🏁❤️</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="w-full bg-black border-t-2 border-neutral-800 py-6 text-center text-gray-500 text-xs">
+            <p>&copy; 2026 Poema Especial Cars &mdash; Para Carol</p>
+        </footer>
+    </section>
+
+
+    <!-- ========================================================== -->
+    <!-- PÁGINA DO CARD 3 — A CANÇÃO "FIRE-RED HIGHWAY"            -->
+    <!-- ========================================================== -->
+    <section id="page-card3" class="hidden relative w-full min-h-screen asphalt-bg speed-track flex flex-col justify-between page-transition">
+        
+        <header class="w-full bg-black/90 border-b-4 border-carsYellow sticky top-0 z-50 backdrop-blur-md shadow-2xl">
+            <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+                <button onclick="navigateToPage2()" class="bg-carsYellow hover:bg-yellow-500 text-black font-bold px-4 py-2 rounded-lg border border-carsRed shadow-lg transition transform hover:-translate-y-0.5 flex items-center text-sm">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Voltar ao Painel
+                </button>
+
+                <div class="flex items-center space-x-3 bg-neutral-900 border border-carsYellow/40 px-4 py-1.5 rounded-full shadow-md">
+                    <button onclick="toggleMusic()" class="text-carsYellow hover:text-white transition text-lg" title="Play / Pause Música">
+                        <i class="fa-solid fa-play" id="music-icon-3"></i>
+                    </button>
+                    <span class="text-xs text-carsSilver font-medium uppercase tracking-wider hidden sm:inline">Trilha Sonora:</span>
+                    <input type="range" min="0" max="1" step="0.05" value="0.5" onchange="changeVolume(this.value)" class="w-20 accent-carsYellow cursor-pointer" title="Controle de Volume">
+                </div>
+            </div>
+            <div class="w-full h-1 bg-gradient-to-r from-carsYellow via-carsRed to-carsOrange"></div>
+        </header>
+
+        <main class="max-w-4xl mx-auto px-4 py-12 flex-grow w-full flex items-center justify-center">
+            <div class="love-letter-box rounded-3xl p-8 md:p-12 relative my-6 w-full" style="border-color: #FFDE00;">
+                <div class="absolute -top-5 right-8 bg-carsYellow text-black font-racing text-sm px-4 py-1.5 rounded-full border-2 border-carsRed shadow-lg transform rotate-3">
+                    <i class="fa-solid fa-music mr-1"></i> Fire-Red Highway
+                </div>
+
+                <h2 class="text-3xl md:text-5xl font-racing text-neutral-900 uppercase tracking-wide mb-2 text-center drop-shadow-sm">
+                    Fire-Red Highway 🎸🎶
+                </h2>
+                <p class="text-center text-carsDarkRed font-bold text-sm md:text-base mb-8 uppercase tracking-widest">
+                    A Song for Carol — 1 Month
+                </p>
+
+                <div class="space-y-8 text-neutral-800 text-base md:text-lg leading-relaxed font-serif text-center">
+                    
+                    <!-- Verse 1 -->
+                    <div>
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Verse 1</h3>
+                        <p>I was driving down a lonely road,<br>
+                        Didn't know where I was going,<br>
+                        Then you came and you lit the way,<br>
+                        Now my heart won't stop its glowing.<br>
+                        One month in and I already know,<br>
+                        What I never knew before —<br>
+                        You're the woman I've been waiting for.</p>
+                    </div>
+
+                    <!-- Pre-Chorus -->
+                    <div>
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Pre-Chorus</h3>
+                        <p>We learned to listen, learned to grow,<br>
+                        Made mistakes and let them go,<br>
+                        Through the wrong turns and the right,<br>
+                        You're still here by my side.</p>
+                    </div>
+
+                    <!-- Chorus -->
+                    <div class="bg-carsYellow/20 p-4 rounded-xl border border-carsYellow">
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Chorus</h3>
+                        <p>Carol, you're my fire-red highway,<br>
+                        The one that leads me home.<br>
+                        Carol, you're the reason my heart keeps racing,<br>
+                        You're the sweetest taste I've ever known.<br>
+                        I love you more than anything,<br>
+                        More than words could ever bring,<br>
+                        And this first month is just the start —<br>
+                        You're the engine of my heart.</p>
+                    </div>
+
+                    <!-- Verse 2 -->
+                    <div>
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Verse 2</h3>
+                        <p>You drove from Rio just for me,<br>
+                        Crossed the miles to make me see,<br>
+                        Asked me to be yours that day,<br>
+                        The greatest gift along the way.<br>
+                        I'll never forget what you did,<br>
+                        My forever, my best friend,<br>
+                        The one I'll love until the end.</p>
+                    </div>
+
+                    <!-- Pre-Chorus -->
+                    <div>
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Pre-Chorus</h3>
+                        <p>Your eyes, the prettiest I've seen,<br>
+                        Your heart, the softest and most serene,<br>
+                        Your laugh, the sweetest melody,<br>
+                        Echoing inside of me.</p>
+                    </div>
+
+                    <!-- Chorus -->
+                    <div class="bg-carsYellow/20 p-4 rounded-xl border border-carsYellow">
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Chorus</h3>
+                        <p>Carol, you're my fire-red highway,<br>
+                        The one that leads me home.<br>
+                        Carol, you're the reason my heart keeps racing,<br>
+                        You're the sweetest taste I've ever known.<br>
+                        I love you more than anything,<br>
+                        More than words could ever bring,<br>
+                        And this first month is just the start —<br>
+                        You're the engine of my heart.</p>
+                    </div>
+
+                    <!-- Bridge -->
+                    <div>
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Bridge</h3>
+                        <p>I want to marry you, build a life,<br>
+                        Make you my home, make you my wife.<br>
+                        Have children, a house, a little world,<br>
+                        A story waiting to be unfurled.<br>
+                        I'm the luckiest in the world,<br>
+                        My fire-red, my favorite girl.</p>
+                    </div>
+
+                    <!-- Verse 3 -->
+                    <div>
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Verse 3</h3>
+                        <p>Your lap's my home, your touch's my dream,<br>
+                        Your kiss, the sweetest thing I've seen.<br>
+                        Your fire-red hair is burned in my mind,<br>
+                        The most beautiful picture I could find.<br>
+                        I want to be my best for you,<br>
+                        Growing together, forever true.</p>
+                    </div>
+
+                    <!-- Final Chorus -->
+                    <div class="bg-carsRed/10 p-4 rounded-xl border border-carsRed">
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Final Chorus</h3>
+                        <p>Carol, you're my fire-red highway,<br>
+                        The one that leads me home.<br>
+                        Carol, you're the reason my heart keeps racing,<br>
+                        You're the sweetest taste I've ever known.<br>
+                        I love you more than anything,<br>
+                        More than any song can sing,<br>
+                        And this first month is just the start —<br>
+                        You're the engine of my heart.</p>
+                    </div>
+
+                    <!-- Outro -->
+                    <div class="pt-2">
+                        <h3 class="font-racing text-carsDarkRed text-xl mb-2 uppercase">Outro</h3>
+                        <p>Always together, side by side,<br>
+                        With love, respect, and peace inside.<br>
+                        You don't need to fear mistakes,<br>
+                        We'll fix them all, whatever it takes.<br>
+                        <strong class="text-carsRed block mt-2">I love you so much, Carol.<br>I love you so much.</strong></p>
+                    </div>
+
+                </div>
+
+                <div class="mt-8 pt-6 border-t-2 border-carsYellow/45 text-right">
+                    <p class="font-racing text-xl text-carsDarkRed">&mdash; Yours, always</p>
+                    <p class="font-racing text-2xl text-carsRed">🏁❤️</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="w-full bg-black border-t-2 border-neutral-800 py-6 text-center text-gray-500 text-xs">
+            <p>&copy; 2026 Canção Fire-Red Highway &mdash; Para Carol</p>
+        </footer>
+    </section>
+
+
+    <!-- ========================================================== -->
+    <!-- JAVASCRIPT — CONTROLADOR DE PÁGINAS E ÁUDIO                -->
+    <!-- ========================================================== -->
+    <script>
+        const bgMusic = document.getElementById('bg-music');
+        bgMusic.volume = 0.5;
+
+        function toggleMusic() {
+            const icon1 = document.getElementById('music-icon');
+            const icon2 = document.getElementById('music-icon-2');
+            const icon3 = document.getElementById('music-icon-3');
+
+            if (bgMusic.paused) {
+                bgMusic.play().then(() => {
+                    if(icon1) icon1.className = "fa-solid fa-pause";
+                    if(icon2) icon2.className = "fa-solid fa-pause";
+                    if(icon3) icon3.className = "fa-solid fa-pause";
+                }).catch(e => console.log("Áudio bloqueado pelo navegador até interação"));
+            } else {
+                bgMusic.pause();
+                if(icon1) icon1.className = "fa-solid fa-play";
+                if(icon2) icon2.className = "fa-solid fa-play";
+                if(icon3) icon3.className = "fa-solid fa-play";
+            }
+        }
+
+        function changeVolume(val) {
+            bgMusic.volume = val;
+        }
+
+        function playMusicOnAction() {
+            if (bgMusic.paused) {
+                bgMusic.play().catch(e => console.log("Autoplay restrito"));
+            }
+            const icon1 = document.getElementById('music-icon');
+            const icon2 = document.getElementById('music-icon-2');
+            const icon3 = document.getElementById('music-icon-3');
+            if(!bgMusic.paused) {
+                if(icon1) icon1.className = "fa-solid fa-pause";
+                if(icon2) icon2.className = "fa-solid fa-pause";
+                if(icon3) icon3.className = "fa-solid fa-pause";
+            }
+        }
+
+        function switchPage(fromId, toId) {
+            const fromPage = document.getElementById(fromId);
+            const toPage = document.getElementById(toId);
+
+            fromPage.style.opacity = '0';
+            fromPage.style.transform = 'scale(1.05)';
+
+            setTimeout(() => {
+                fromPage.classList.add('hidden');
+                toPage.classList.remove('hidden');
+                toPage.style.opacity = '0';
+                toPage.style.transform = 'scale(0.95)';
+                
+                void toPage.offsetWidth;
+
+                toPage.style.opacity = '1';
+                toPage.style.transform = 'scale(1)';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 500);
+        }
+
+        function navigateToPage2() {
+            const currentActive = document.querySelector('section:not(.hidden)').id;
+            switchPage(currentActive, 'page-2');
+        }
+
+        function navigateToHome() {
+            const currentActive = document.querySelector('section:not(.hidden)').id;
+            switchPage(currentActive, 'page-home');
+        }
+
+        function navigateToCard1() {
+            playMusicOnAction();
+            switchPage('page-2', 'page-card1');
+        }
+
+        function navigateToCard2() {
+            playMusicOnAction();
+            switchPage('page-2', 'page-card2');
+        }
+
+        function navigateToCard3() {
+            playMusicOnAction();
+            switchPage('page-2', 'page-card3');
+        }
+    </script>
+</body>
+</html>
